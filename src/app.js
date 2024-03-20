@@ -1,7 +1,7 @@
 const express = require('express')
 const apiRoute = require('./routes');
 require('dotenv').config()
-require('./models/mongo-provider')
+require('./DB/mongo')
 
 const app = express()
 
