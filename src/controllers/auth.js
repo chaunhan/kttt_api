@@ -39,6 +39,13 @@ const login = async (req,res) => {
             console.log(comparePass , "check pass")
             if (comparePass == true) {
                 const token = generateToken({UserData: check})
+                res.cookie("Token", token, {
+                    httpOnly : true,
+                    patch:"/",
+                    sameSite: "strict",
+                    secure:false
+                })
+                req.session.user = check;
                 res.json({message: "dang nhap thanh cong", data:check, token:token})
             } else {
                 res.status(404).json({ message: "Sai mật khẩu."})

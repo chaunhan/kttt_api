@@ -5,7 +5,7 @@ var today = new Date();
 var a = today.toISOString().substring(0, 10);
 
 const baihoc = new Schema({
-    ThuocKhoa : {type: String},
+    CourseID : {type: String},
     TenBai : { type: String},
     Title: { type: String},
     link: { type: String},

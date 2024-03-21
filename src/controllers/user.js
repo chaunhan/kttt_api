@@ -33,13 +33,11 @@ const editProfile = async (req,res) => {
     const {ten, address, sex, phone} = (req.body);
     try {
         const updateData = ({
-            _id: _id,
             ten: ten,
             address: address,
             sex: sex,
             phone: phone
         })
-        console.log(s, "data")
         await UserModel.findByIdAndUpdate(userID, updateData);
         res.status(200).json("Da update")
     } catch (error) {
