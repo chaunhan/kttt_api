@@ -5,10 +5,10 @@ const AuthControllers = require('../controllers/auth')
 const { authorizationJwt, adminAuthorization } = require("../middleware")
 
 
-userRoute.get("/",authorizationJwt, UserControllers.getAll);
+userRoute.get("/", adminAuthorization, UserControllers.getAll);
 userRoute.post("/login", AuthControllers.login)
 userRoute.post("/register", AuthControllers.register)
-userRoute.post("/:userID", UserControllers.editProfile)
+userRoute.put("/:userID", authorizationJwt,UserControllers.editProfile)
 userRoute.delete("/:userId", adminAuthorization, UserControllers.delUser)
-userRoute.post("/changepass", UserControllers.changePass)
+userRoute.post("/changepass",authorizationJwt, UserControllers.changePass)
 module.exports = userRoute;

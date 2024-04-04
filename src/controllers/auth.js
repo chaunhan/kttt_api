@@ -45,7 +45,7 @@ const login = async (req,res) => {
                     sameSite: "strict",
                     secure:false
                 })
-                req.session.user = check;
+                // req.session.user = check;
                 res.json({message: "dang nhap thanh cong", data:check, token:token})
             } else {
                 res.status(404).json({ message: "Sai mật khẩu."})

@@ -15,6 +15,11 @@ apiRoute.use('/course',(req, res, next) => {
     next();
 }, courseRoute);
 
+apiRoute.use('/admin',(req, res, next) => {
+    console.log('call admin api route');
+    next();
+}, courseRoute);
+
 apiRoute.use('/', function (req, res) {
     return res.json({'message': 'api working'})
 });

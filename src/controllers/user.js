@@ -11,7 +11,6 @@ const getAll = async (req,res) => {
     if (keyWord && keyWord.length > 0) {
       condition.email = { $regex: keyWord, $options: "i" }
     }
-  
     // pagination có kèm theo đk
     const userlists = await UserModel.find(condition)
       .limit(limit * 1)
