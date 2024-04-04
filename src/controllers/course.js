@@ -76,43 +76,48 @@ const deleteCourse = async (req, res) => {
 
 const addcart = async (req,res) => {
     const info = new CartModel({
-        id : req.session.user._id,
+        id : req.user.UserData._id,
         TenCourse : req.body.TenCourse,
         GiaCourse : req.body.GiaCourse
     })
+
+    res.cookie("CourseInfo", info, {
+        httpOnly : true,
+        patch:"/",
+        sameSite: "strict",
+        secure:false})
     console.log(info)
-    const tien = VND.format(info.GiaCourse)
-    const cre = await Cart.create(info);
+    const cre = await CartModel.create(info);
     try{
         cre
-        return res.status(200).json("Them vao gio hang", {giatien: tien , user: req.session.user , info : info})
+        return res.status(200).json("Them vao gio hang"+ JSON.stringify(info))
     } catch (e) {
         console.log(e)
     }
 }
 
 const guilenhMua = async (req,res) => {
-    const {email , _id, GiaCourse , TenCourse, ten , ref} = req.body
-    console.log(email , _id, GiaCourse)
     const info = new ReqMua({
-        email: email,
-        id: _id,
-        ref: ref,
-        tien: GiaCourse,
-        TenCourse: TenCourse,
-        ten: ten
+        email: req.user.UserData.email,
+        id: req.user.UserData._id,
+        ref: req.user.UserData.ref,
+        tien: req.cookies.CourseInfo.GiaCourse,
+        TenCourse: req.cookies.CourseInfo.TenCourse,
+        ten: req.user.UserData.ten
     })
-    const check = ReqMua.findOne({email: email})
+    const check = ReqMua.findOne({email: req.user.UserData.email})
     if (check != null) {
         try {
-        const del = await ReqMua.findByIdAndDelete(check._id,info)
-        const cre = await ReqMua.create(info)
+        await ReqMua.findByIdAndDelete(check._id,info)
+        await ReqMua.create(info)
+        res.status(200).json("THEM THANH CONG")
         } catch (e) {
         console.log(e)
         }
     }else {
         try {
-        const cre = await ReqMua.create(info)
+        await ReqMua.create(info)
+        res.status(200).json("THEM THANH CONG")
         } catch (e) {
         console.log(e)
         }

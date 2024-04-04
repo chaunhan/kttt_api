@@ -11,8 +11,7 @@ async function comparePassword(plaintextPassword, hash) {
   return result
 }
 
-function generateToken(payload) {
-    console.log("process.env.SECRET_KEY",process.env.SECRET_KEY)
+function generateToken(payload) { 
 const token = jwt.sign({data: {
 ...payload
 }}, process.env.SECRET_KEY, { expiresIn: process.env.EXPIRE_TIME })
