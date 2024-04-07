@@ -4,6 +4,7 @@ const cors = require('cors')
 const path = require("path")
 const UserModel= require("./models/user")
 const cookieParser = require('cookie-parser')
+const session = require('express-session')
 require('dotenv').config()
 require('./DB/mongo')
 
@@ -17,6 +18,13 @@ app.use(express.static(__dirname + '/publics'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 // middleware application routes
+
+app.use(session({
+  secret: process.env.SESSION_SECRET,
+  resave: true,
+  saveUninitialized: true,
+
+}))
 
 app.use((req, res, next) => {
   // console.log('Log system:', process.env)

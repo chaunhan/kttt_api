@@ -43,13 +43,10 @@ const login = async (req, res) => {
       console.log(comparePass, "check pass");
       if (comparePass == true) {
         const token = generateToken(check._id);
-        res.cookie("Token", token, {
-          httpOnly: true,
-          patch: "/",
-          sameSite: "strict",
-          secure: false,
-        });
-        // req.session.user = check;
+        console.log("id", check._id);
+        req.session.token = token;
+        req.session.user = check;
+        console.log(req.session);
         res.json({
           message: "dang nhap thanh cong",
           data: check,
